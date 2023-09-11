@@ -1,0 +1,422 @@
+* {
+  font-family: sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+
+  background-color: rebeccapurple;
+}
+
+svg {
+  min-width: 24px;
+
+  fill: aliceblue;
+  
+  pointer-events: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Body Layout */
+
+.sustube {
+  max-height: 100vh;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 50px 80px 1fr;
+
+  overflow: hidden;
+
+  background-color: midnightblue;
+}
+
+/* Search Nav */
+
+.searchNav {
+
+  max-height: 100px;
+
+  grid-column: 1/-1;
+  grid-row: 1/1;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  background-color: #000000;
+}
+
+.searchNav > div {
+  margin: 10px;
+}
+
+.searchBar {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.searchBar > div {
+  margin: 5px;
+}
+
+.user {
+  min-width: 30px;
+  min-height: 30px;
+
+  background-color: blueviolet;
+
+  border-radius: 50px;
+}
+
+.homeIcon {
+  max-height: 100px;
+  max-width: 100px;
+  min-width: 100px;
+}
+
+.homeIcon > .homeIconSVG {
+  min-height: 100%;
+  min-width: 100%;
+}
+
+/* Search Box */
+
+.searchBox {
+  min-width: 450px;
+  min-height: 30px;
+  /* width: 50%; */
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 50px;
+
+  /* position: absolute; */
+
+  background-color: hsl(0, 0%, 18.82%);
+  border: 2.5px solid hsl(0, 0%, 18.82%);
+  /* border-right: 10px; */
+  border-radius: 50px 0px 0px 50px;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+.searchText {
+  border-radius: 50px 0px 0px 50px;
+  background-color: #000000;
+  color: aliceblue;
+
+  vertical-align: middle;
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.searchText > input{
+  min-height: 25px;
+  min-width: 445px;
+  
+  border-radius: 50px 0px 0px 50px;
+  border: 0px;
+  background-color: #000000;
+  color: aliceblue;
+}
+
+.searchButton {
+  max-height: 30px;
+  max-width: 30px;
+
+  position: relative;
+
+  /* margin-left: 2px; */
+
+  /* border-left: 2px solid hsl(0, 0%, 18.82%); */
+}
+
+/* .searchButton > svg {
+  margin-left: 10px;
+} */
+
+/* Input Suggestions */
+
+#inputSuggestions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  position: fixed;
+  top: 50px;
+
+  width: 100%;
+}
+
+#inputSuggestions > div {
+  margin: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+#inputSuggestions > .searchBar > div {
+  margin: 0px;
+}
+
+.resultSpaceOccupier {
+  min-width: 10%;
+  max-height: 0px;
+}
+
+.resultBox {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+
+  min-width: 500px;
+  min-height: 30px;
+  width: 40%;
+  height: 100%;
+
+  margin-right: 100px;
+  margin-left: 10px;
+
+  background-color: hsl(0, 0%, 18.82%);
+  color: aliceblue;
+  border: 2px solid hsl(0, 0%, 18.82%);
+  border-radius: 10px;
+}
+
+.resultBox > div {
+  margin-right: 10%;
+}
+
+.resultList {
+  display: grid;
+  grid-template-columns: 0fr 1fr;
+}
+
+.resultList > .resultIcon {
+  width: 25px;
+  margin: 5px;
+}
+
+.resultList > .resultText {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+.inputSuggestionHidden {
+  visibility: hidden;
+}
+
+/* Library */
+
+.libraryNav {
+  grid-column: 1/1;
+  grid-row: 2/-1;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: scroll;
+
+  background-color: #000000;
+}
+
+.library {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin: 10px;
+  margin-top: 30px;
+
+  color: whitesmoke;
+}
+
+.library > svg {
+  max-width: 34px;
+  max-height: 34px;
+}
+
+.library > div {
+  margin-top: 5px;
+}
+
+/* Suggestions */
+
+.suggestionNav {
+  grid-column: 2/-1;
+  grid-row: 2/2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: scroll;
+  flex-wrap: wrap;
+
+  background-color: #000000;
+}
+
+.suggestionNav::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
+.suggestion {
+  text-align: center;
+  text-justify: auto;
+
+  min-height: 30px;
+  resize: none;
+
+  margin: 15px;
+  padding: 10px;
+  padding-bottom: 0px;
+  border-radius: 10px;
+
+  background-color: #383535;
+  color: aliceblue;
+}
+
+/* Videos */
+
+.videoBoxController{
+  display: grid;
+  grid-template-rows: 70px 1fr;
+
+  overflow: scroll;
+  background-color: #000000;
+}
+
+.videoController{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: 50px;
+  color: white;
+  font-size: 30px;
+
+}
+
+.videoController > button{
+  margin: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+
+  background-color: #383535;
+  border: 0px;
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+
+  font-size: 20px;
+  color: aliceblue;
+}
+
+.videoBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow: scroll;
+
+  background-color: #000000;
+}
+
+.video {
+  font-family: sans-serif;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  max-width: 350px;
+
+  margin: 2%;
+  margin-top: 1%;
+
+  color: white;
+  background-color: black;
+
+  text-overflow: ellipsis;
+
+  border-radius: 15px;
+}
+
+.video > img {
+  width: 350px;
+  border-radius: 10px;
+  
+  background-color: transparent;
+}
+
+.videoDetails {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  display: grid;
+  grid-template-rows: 23px 23px 23px;
+  grid-template-columns: 1fr;
+  /* grid-template-rows: 1fr  1fr  1fr ; */
+}
+
+.videoTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  display: grid;
+  grid-template-columns: 50px 1fr;
+
+  margin-top: 10px;
+
+  font-size: 20px;
+/* 
+  max-width: 400px;
+  max-height: 20px; */
+
+  /* text-overflow: ellipsis; */
+}
+
+.videoText {
+
+  overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 3;
+-webkit-box-orient: vertical;
+
+  /* max-width: 400px; */
+
+  /* font-size: 20px; */
+  font-weight: 800;
+  /* text-overflow: ellipsis; */
+}
+
+.videoIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  background-color: aquamarine;
+}
+
