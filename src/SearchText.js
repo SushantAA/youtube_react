@@ -1,85 +1,65 @@
-import { useDeferredValue, useEffect, useState } from 'react';
-import axios, * as others from 'axios';
+import { useDeferredValue, useEffect, useState } from "react";
+import axios, * as others from "axios";
 
-function SearchSuggestions({searchText, suggestions}){
+function SearchText() {
+  const [searchText, setSearchText] = useState("");
 
-    console.log('Search Suggestion call');
+  const deffText = useDeferredValue(searchText);
 
-    
-    if(searchText!==''){
-        console.log(suggestions);
+  const [suggestions, setSuggestions] = useState([]);
 
-        const suggestionsArr = suggestions.map(a =>  <div>{a}</div> );
-    
-        console.log('suggestionsArr => ', suggestionsArr);
-    
-        return (
-            <div >
-                {suggestionsArr}
-            </div>
-        );
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: "https://youtube-data8.p.rapidapi.com/auto-complete/",
+      params: {
+        q: deffText,
+        hl: "en",
+        gl: "US",
+      },
+      headers: {
+        "X-RapidAPI-Key": "d0e3eb685dmsh3e4f57bb8137dd0p1b15c4jsne428daa5cd78",
+        "X-RapidAPI-Host": "youtube-data8.p.rapidapi.com",
+      },
+    };
+
+    async function getData() {
+      try {
+        const response = await axios.request(options);
+
+        const responseData = response.data.results;
+
+        console.log("search suggestions => ", responseData);
+
+        const responseDataCopy = responseData.map((a) => {
+          console.log(a);
+          return <div>{a}</div>;
+        });
+
+        setSuggestions();
+
+        console.log("results => ", responseDataCopy);
+
+        setSuggestions(responseDataCopy);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    return (<>{searchText}</>);
-}
+    getData();
+  }, [deffText]);
 
-function SearchText(){
-
-    const [searchText, setSearchText] = useState('');
-
-    const deffText = useDeferredValue(searchText);
-
-    // useEffect(()=>  console.log('deffText => ', deffText), [deffText]);
-
-    const [suggestions, setSuggestions] = useState([]);
-
-
-    useEffect(()=>{
-
-        const options = {
-            method: 'GET',
-            url: 'https://youtube-data8.p.rapidapi.com/auto-complete/',
-            params: {
-            //   q:'cartoon',
-              q: deffText,
-              hl: 'en',
-              gl: 'US'
-            },
-            headers: {
-              'X-RapidAPI-Key': '618fb12b44msh0219149fe2ae4bep1bfc0cjsn692e90884bc9',
-              'X-RapidAPI-Host': 'youtube-data8.p.rapidapi.com'
-            }
-          };
-          
-          async function getData(){
-            try {
-                const response = await axios.request(options);
-
-                const dd =  response.data.results;
-
-                console.log('search suggestions => ', dd);
-
-                const arr = dd.map(a => a);
-
-                setSuggestions();
-                console.log('results => ', arr)
-
-                setSuggestions(arr);
-            } catch (error) {
-                console.error(error);
-            }
-          }
-
-          getData();
-
-    }, [deffText])
-
-    return (
-        <div className="searchText">
-            <input placeholder="Search" value={searchText} onChange={(e) => setSearchText( e.target.value.toString() ) }   type="text"></input>
-            <SearchSuggestions searchText={searchText}  />
-        </div>
-    );
+  return (
+    <div className="searchText">
+      <input
+        placeholder="Search"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value.toString())}
+        type="text"
+      ></input>
+      <div>{suggestions}</div>
+    </div>
+  );
 }
 
 export default SearchText;

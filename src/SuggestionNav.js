@@ -1,32 +1,32 @@
-function SuggestionNav () {
-    return (
-        <div className="suggestionNav">
-            <div className="suggestion" aria-label="Create">Slamdunk</div>
-            <div className="suggestion">One pice</div>
-            <div className="suggestion">Dragon ball</div>
-            <div className="suggestion">Fullmetal</div>
-            <div className="suggestion">Attack on Titans</div>
-            <div className="suggestion">Code Geass</div>
-            <div className="suggestion">Psyco Pass</div>
-            <div className="suggestion" aria-label="Create">Slamdunk</div>
-            <div className="suggestion">One pice</div>
-            <div className="suggestion">Dragon ball</div>
-            <div className="suggestion">Fullmetal</div>
-            <div className="suggestion">Attack on Titans</div>
-            <div className="suggestion">Code Geass</div>
-            <div className="suggestion">Psyco Pass</div>
-            <div className="suggestion">Attack on Titans</div>
-            <div className="suggestion">Code Geass</div>
-            <div className="suggestion">Psyco Pass</div>
-            <div className="suggestion" aria-label="Create">Slamdunk</div>
-            <div className="suggestion">One pice</div>
-            <div className="suggestion">Dragon ball</div>
-            <div className="suggestion">Fullmetal</div>
-            <div className="suggestion">Attack on Titans</div>
-            <div className="suggestion">Code Geass</div>
-            <div className="suggestion">Psyco Pass</div>
-        </div>
-    );
+function Suggestion({ title }) {
+  return <div className="suggestion">{title}</div>;
+}
+
+function getDummySuggestions() {
+  const suggestionList = [
+    "Slamdunk",
+    "One pice",
+    "Dragon ball",
+    "Fullmetal",
+    "Attack on Titans",
+    "Code Geass",
+    "Psyco Pass",
+  ];
+
+  let suggestionElementList = suggestionList.map((a) => (
+    <Suggestion title={a} />
+  ));
+
+  return suggestionElementList;
+}
+
+function SuggestionNav() {
+  return (
+    <div className="suggestionNav">
+      {getDummySuggestions()}
+      {getDummySuggestions()}
+    </div>
+  );
 }
 
 export default SuggestionNav;
