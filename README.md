@@ -1,2 +1,2 @@
-# youtube_react
-youtube_react
+# Youtube in React
+## Features: Debounce + Pagination
