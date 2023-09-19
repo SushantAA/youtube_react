@@ -3,8 +3,10 @@ import axios, * as others from "axios";
 
 function SearchText() {
   const [searchText, setSearchText] = useState("");
+  const [deffText, setDeffText] = useState("");
+  const [time, setTime] = useState(0);
 
-  const deffText = useDeferredValue(searchText);
+  const date = new Date();
 
   const [suggestions, setSuggestions] = useState([]);
 
@@ -49,12 +51,32 @@ function SearchText() {
     getData();
   }, [deffText]);
 
+  function setDefferedText(e){
+    setSearchText(e.target.value.toString())
+    
+    console.log(searchText, ' <======> ' , deffText)
+    
+    const currTime = date.getTime();
+    console.log(time, currTime, (currTime-time));
+    
+    if(searchText.length<=1){
+      setDeffText('')
+      setTime(currTime)
+    }
+
+    if((currTime-time) > 400){
+      setDeffText(searchText);
+      setTime(currTime);  
+    }
+  }
+
   return (
     <div className="searchText">
       <input
         placeholder="Search"
         value={searchText}
-        onChange={(e) => setSearchText(e.target.value.toString())}
+        // onChange={(e) => setSearchText(e.target.value.toString())}
+        onChange={setDefferedText}
         type="text"
       ></input>
       <div>{suggestions}</div>
