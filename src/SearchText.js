@@ -1,26 +1,35 @@
-import { useDeferredValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios, * as others from "axios";
+import { searchTextData } from "./searchTextData";
 
-function SearchText() {
+function searchSuggestions(responseData, setSearchText, setDebounceText, debounceText, setResultText, setShowSuggestions){
+  const responseDataCopy = responseData.map((a, idx) => {
+    return <div key={idx}  className="suggestionItems"  onClick={() => {setDebounceText(a); setSearchText(a);  setResultText(a); setShowSuggestions(false); console.log(debounceText)}}  >{a}</div>;
+  });
+
+  return responseDataCopy
+}
+
+
+function SearchText({debounceText, setDebounceText, setResultText, searchClick, setSearchClick}) {
+
   const [searchText, setSearchText] = useState("");
-  const [deffText, setDeffText] = useState("");
-  const [time, setTime] = useState(0);
-
-  const date = new Date();
-
+  const [timer, setTimer] = useState();
   const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
+
     const options = {
       method: "GET",
       url: "https://youtube-data8.p.rapidapi.com/auto-complete/",
       params: {
-        q: deffText,
+        q: debounceText,
         hl: "en",
         gl: "US",
       },
       headers: {
-        "X-RapidAPI-Key": "d0e3eb685dmsh3e4f57bb8137dd0p1b15c4jsne428daa5cd78",
+        "X-RapidAPI-Key": "a09e68c215msh06895de05dfd523p18a81bjsne76a8b651531",
         "X-RapidAPI-Host": "youtube-data8.p.rapidapi.com",
       },
     };
@@ -28,46 +37,34 @@ function SearchText() {
     async function getData() {
       try {
         const response = await axios.request(options);
-
         const responseData = response.data.results;
-
-        console.log("search suggestions => ", responseData);
-
-        const responseDataCopy = responseData.map((a) => {
-          console.log(a);
-          return <div>{a}</div>;
-        });
-
-        setSuggestions();
-
-        console.log("results => ", responseDataCopy);
-
-        setSuggestions(responseDataCopy);
+        setSuggestions(searchSuggestions(responseData, setSearchText, setDebounceText, debounceText, setResultText, setShowSuggestions));
       } catch (error) {
-        console.error(error);
+        const responseData = searchTextData
+        setSuggestions(searchSuggestions(responseData, setSearchText, setDebounceText, debounceText, setResultText, setShowSuggestions));
       }
     }
 
     getData();
-  }, [deffText]);
+  }, [debounceText]);
 
-  function setDefferedText(e){
+
+  useEffect(()=>{
+    setDebounceText(searchText);
+    setSearchClick(false);
+  }, [searchClick])
+
+  function debounce(func, timeout = 300){
+    clearTimeout(timer);
+    setShowSuggestions(true)
+    setTimer( setTimeout(() => { func.apply(this); }, timeout));
+  }
+
+  function setText(e){
     setSearchText(e.target.value.toString())
-    
-    console.log(searchText, ' <======> ' , deffText)
-    
-    const currTime = date.getTime();
-    console.log(time, currTime, (currTime-time));
-    
-    if(searchText.length<=1){
-      setDeffText('')
-      setTime(currTime)
-    }
-
-    if((currTime-time) > 400){
-      setDeffText(searchText);
-      setTime(currTime);  
-    }
+    setShowSuggestions(true);
+    if(e.target.value.toString()<1) setShowSuggestions(false)
+    debounce(()=>setDebounceText(e.target.value.toString()));
   }
 
   return (
@@ -75,11 +72,12 @@ function SearchText() {
       <input
         placeholder="Search"
         value={searchText}
-        // onChange={(e) => setSearchText(e.target.value.toString())}
-        onChange={setDefferedText}
+        onChange={setText}
+        onke
         type="text"
       ></input>
-      <div>{suggestions}</div>
+
+     { showSuggestions &&  <div>{suggestions}</div>}
     </div>
   );
 }

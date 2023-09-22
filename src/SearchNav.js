@@ -1,7 +1,7 @@
 import "./App.css";
 import SearchText from "./SearchText";
 
-function SearchNav() {
+function SearchNav({debounceText, setDebounceText, setResultText, searchClick, setSearchClick}) {
   return (
     <div className="searchNav">
       <div className="libraryCollapse">
@@ -42,9 +42,9 @@ function SearchNav() {
       </div>
       <div className="searchBar">
         <div className="searchBox">
-          <SearchText />
+          <SearchText debounceText={debounceText} setDebounceText={setDebounceText} setResultText={setResultText} searchClick={searchClick} setSearchClick={setSearchClick}/>
         </div>
-        <div className="searchButton">
+        <div className="searchButton" onClick={()=>setSearchClick(true)} >
           <svg
             enableBackground="new 0 0 24 24"
             height="24"

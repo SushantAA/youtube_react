@@ -25,6 +25,7 @@ function SuggestionNav() {
     <div className="suggestionNav">
       {getDummySuggestions()}
       {getDummySuggestions()}
+      {getDummySuggestions()}
     </div>
   );
 }
